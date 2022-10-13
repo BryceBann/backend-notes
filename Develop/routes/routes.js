@@ -20,6 +20,21 @@ module.exports = app => {
             return console.log('Added new note: ' +newNote.title)
         });
 
+        app.get('/notes', (req, res) => {
+            res.sendFile(path.join(__dirname, "../public/notes.html"))
+        });
+
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, "../public/index.html"))
+        });
+
+        function updateDB()  {
+            fs.writeFile("db/db.json", JSON.stringify(notes, "\t"),err => {
+                if (err) throw err;
+                return true;
+            });
+        }
+
         
-    })
+    });
 }
