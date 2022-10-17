@@ -13,7 +13,7 @@ const uniqid = require('uniqid');
             res.json(notes);
         });
 
-        router.post("/api/notes", (req, res) =>{
+        router.post("/api/notes", (req, res) => {
             
             const newNote = {
                 title: req.body.title,
@@ -25,6 +25,17 @@ const uniqid = require('uniqid');
             res.json(newNote)
 
         });
+
+        router.get('/api/notes/:id', (req, res) => {
+            res.json(notes[req.params.id])
+        });
+
+        router.delete('/api/notes/:id', (req, res) => {
+            notes.splice(req.params.id, 1);
+            updateDB();
+            res.json(notes)
+            console.log('note deleted' +req.params.id);
+        })
 
         router.get('/notes', (req, res) => {
             res.sendFile(path.join(__dirname, "../public/notes.html"))
